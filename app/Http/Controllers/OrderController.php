@@ -22,18 +22,21 @@ class OrderController extends Controller
     public function create(Request $request)
     {
     	$order = Order::create($request->all());
-
+        //$order->total = $request->get('')
     	return response()->json($order, 201);
     }
 
     public function viewOrder(Order $order)
     {
-    	return $order;
+    	return view('viewOrder', compact('order'));
     }
 
-    public function editOrder($id)
+    public function editOrder()
     {
-    	
+        $items = Product::all();
+        $order = Order::all();
+        
+    	return view('editOrder', compact('items', 'order'));
     }
 
     public function update(Request $request, Order $order)

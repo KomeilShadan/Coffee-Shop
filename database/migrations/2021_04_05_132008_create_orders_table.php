@@ -32,20 +32,20 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('name');
             $table->enum('option', ['skim', 'semi', 'whole', 'small', 'medium', 'large', 'single',
-             'double', 'triple', 'chocolate_chip', 'ginger']);
+             'double', 'triple', 'chocolate_chip', 'ginger'])->nullable();
             $table->decimal('price');
             $table->timestamps();
         });
         
-        Schema::create('order_items', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('order_id');
-            $table->foreignId('product_id');
+        Schema::create('order_product', function (Blueprint $table) {
+            $table->foreignId('order_id')->index();
+            $table->foreignId('product_id')->index();
+
+            $table->primary(['order_id', 'product_id']);
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 
-            $table->integer('quantity');
             $table->timestamps();
         });
 
@@ -59,7 +59,7 @@ class CreateOrdersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('orders');
-        Schema::dropIfExists('order_items');
         Schema::dropIfExists('products');
+        Schema::dropIfExists('order_product');
     }
 }

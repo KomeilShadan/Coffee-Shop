@@ -9,8 +9,8 @@ class Product extends Model
 {
     use HasFactory;
 
-    public function orderItem()
+    public function Orders()
     {
-    	return $this->belongsToMany(OrderItem::class);
+    	return $this->belongsToMany(Order::class)->withTimestamps();
     }
 }

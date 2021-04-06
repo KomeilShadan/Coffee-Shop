@@ -21,9 +21,7 @@
 		<div class="vertical-menu">
 		  <a href="/api/menu">View Menu</a>
 		  <a href="/api/order">Order</a>
-		  <a href="#">Link 2</a>
-		  <a href="#">Link 3</a>
-		  <a href="#">Link 4</a>
+		  <a href="/api/order/{{$order->id}}">View Order</a>
 		</div>
 
    	</body>
