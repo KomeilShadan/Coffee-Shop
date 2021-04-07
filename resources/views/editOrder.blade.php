@@ -16,7 +16,7 @@
             @method('PUT')
             @csrf
             <label for="user_id">customer id:</label>
-            <input type="text" id="user_id" name="user_id"><br><br>
+            <input type="text" id="user_id" name="user_id" value="{{$order[0]->user_id}}"><br><br>
                     {{--  <ol>
                 @foreach($order as $item)
                     <li>{{$item->products->name}}</li>
@@ -24,14 +24,22 @@
                 @endforeach
                     </ol> --}}
             <label for="item"> select items:</label>
-            <select id="item" name="item">
-                @foreach($items as $item)
-                     <option value="{{$item->id}}">{{$item->name." ".$item->option." $".$item->price}}
+            <select name="products[]" title="products" id="products" multiple>
+                @foreach($products as $p)
+                    
+                     <option value="{{$p->id}}">{{$p->name." ".$p->option." $".$p->price}}
                      </option>
+
                 @endforeach
             </select><br><br>
-            <input type="button" value="Cancel">
+            
             <input type="submit" value="update">
+        </form>
+
+        <form method="post" action="../{{$order[0]->id}}">
+            @method('DELETE')
+
+            <input type="submit" value="Cancel and Delete">
         </form>
 		
    	</body>

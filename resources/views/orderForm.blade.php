@@ -9,27 +9,34 @@
         <title>order</title>
 
         
+		<script src="http://code.jquery.com/jquery-1.5.min.js"></script>
     </head>
     <body>
 
         <form method="post" action="">
-            
+
             @csrf
             <label for="user_id">customer id:</label>
             <input type="text" id="user_id" name="user_id"><br><br>
             <label for="item"> select items:</label>
-            <select id="item" name="item">
+            <select name="products[]" title="products" id="products" multiple>
                 @foreach($items as $item)
-                     <option value="{{$item->id}}">{{$item->name." ".$item->option." $".$item->price}}
+
+                     <option value="{{$item->id}}" id="item">
+                        {{$item->id." ".$item->name." ".$item->option." $".$item->price}}
                      </option>
+                     
                 @endforeach
             </select>
-            <input type="button" value="Add" {{-- onclick="@php
-
-               echo '<div>'.request()->get('item.value').'</div>'
-            @endphp" --}}><br><br>
             <input type="submit" value="Submit">
         </form>
-		
+            {{-- <input type="button" value="Add" id="Add"><br><br>
+            <ol id="ol"></ol>
+        <script>
+            $("#Add").click( function() {
+            console.log($("#products").val());
+            $("#ol").append("<li>"+$("#products").text()+"</li>");              
+                           });
+        </script> --}}
    	</body>
 </html>

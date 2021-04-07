@@ -15,5 +15,7 @@ use App\Models\Order;
 */
 
 Route::get('/', function (Order $order) {
+
+	//$order = Order::all();
     return view('panel', compact('order'));
 });

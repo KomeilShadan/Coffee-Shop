@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\User;
 
 class OrderController extends Controller
 {
@@ -21,35 +23,48 @@ class OrderController extends Controller
 
     public function create(Request $request)
     {
-    	$order = Order::create($request->all());
-        //$order->total = $request->get('')
+        //test data
+
+        $order = Order::create(['user_id' => $request->input('user_id') ,
+         'total' => 25, 'item_count' => 2]);  
+    	//$order = Order::create($request->all());
+
+        $order = Order::latest()->first();
+        $productIds = $request->input('products');
+        $order->products()->sync($productIds);
+        //$total = DB::table('products')->sum($productIds->price);
+        //$order->update(['total' => $total]);
+
     	return response()->json($order, 201);
     }
 
-    public function viewOrder(Order $order)
+    public function viewOrder()
     {
-    	return view('viewOrder', compact('order'));
+        $orders = Order::all();
+    	return view('viewOrder', compact('orders'));
     }
 
-    public function editOrder()
+    public function editOrder($id)
     {
-        $items = Product::all();
-        $order = Order::all();
+        $products = Product::all();
+        $order = Order::where('id', $id)->get();
         
-    	return view('editOrder', compact('items', 'order'));
+    	return view('editOrder', compact('products', 'order'));
     }
 
     public function update(Request $request, Order $order)
     {
     	$order->update($request->all());
+        $productIds = $request->input('products');
+        $order->products()->sync($productIds);
 
     	return response()->json($order, 200);
     }
 
-    public function delete(Order $order)
+    public function delete($id)
     {
-    	$order->delete();
+    	$order = Order::find($id)->delete();
 
-    	return response()->json(null, 204);
+    	return redirect('http://localhost:8000/api/order/view');
     }
 }

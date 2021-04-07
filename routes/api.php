@@ -26,7 +26,7 @@ Route::get('order', 'OrderController@order');
 
 Route::post('order', 'OrderController@create');
 
-Route::get('order/{id}', 'OrderController@viewOrder');
+Route::get('order/view', 'OrderController@viewOrder');
 
 Route::get('order/edit/{id}', 'OrderController@editOrder');
 

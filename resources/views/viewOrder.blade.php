@@ -11,12 +11,20 @@
         
     </head>
     <body>
+        <h1> user orders </h1>
 
-        <form method="post" action="">
-            @method('DELETE')
-            <a href="edit/{{$order->id}}"><input type="button" value="Edit"></a>
-            <input type="submit" value="Cancel">
-        </form>
-        
+        <ul>click to edit
+        @foreach($orders as $order)
+
+            <li>
+            <a href="/api/order/edit/{{ $order->id }}">    
+
+             {{ $order->id}} 
+             
+            </a>
+            </li>
+
+        @endforeach 
+        </ul>
     </body>
 </html>
