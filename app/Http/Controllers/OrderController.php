@@ -23,8 +23,8 @@ class OrderController extends Controller
 
     public function create(Request $request)
     {
-        //test data
 
+        //test data
         $order = Order::create(['user_id' => $request->input('user_id') ,
          'total' => 25, 'item_count' => 2]);  
     	//$order = Order::create($request->all());
@@ -32,8 +32,14 @@ class OrderController extends Controller
         $order = Order::latest()->first();
         $productIds = $request->input('products');
         $order->products()->sync($productIds);
+        
         //$total = DB::table('products')->sum($productIds->price);
         //$order->update(['total' => $total]);
+
+        /*$total = 0;
+        foreach ($products as $product) {
+        $total += $product->price * $product->pivot->quantity
+        }*/
 
     	return response()->json($order, 201);
     }
